@@ -44,60 +44,91 @@
 </head> 
 <body>
 	<main>
-	  <h2>사용자 등록 ${msg}</h2>
-	  
-	  <form action="/Users/Write" method="post">
+	  <h2>사용자 수정</h2>
+	  <form action="/Users/Update" method="post">
 	   <table>
 	     <tr>
-	       <td><span class=red>*</span>사용자 아이디</td>
-	       <td><input type="text" name="userid"></td>
+	       <td><span class=red>*</span>아이디</td>
+	       <td><input type="text" name="userid" value="${user.userid}" readonly></td>
 	     </tr>
 	     <tr>
-	       <td><span class=red>*</span>비밀번호</td>
+	       <td><span class=red>*</span>현재 비밀번호</td>
+	       <td><input type="password" id="passwdold"></td>
+	     </tr>
+	     <tr>
+	       <td><span class=red>*</span>새 비밀번호</td>
 	       <td><input type="password" name="passwd" id="passwd"></td>
 	     </tr>
 	     <tr>
-	       <td><span class=red>*</span>비밀번호 확인</td>
+	       <td><span class=red>*</span>새 비밀번호 확인</td>
 	       <td><input type="password" id="passwd2"></td>
 	     </tr>
 	     <tr>
 	       <td><span class=red>*</span>이름</td>
-	       <td><input type="text" name="username"></td>
+	       <td><input type="text" name="username" value="${user.username}"></td>
 	     </tr>
 	     <tr>
 	       <td>이메일</td>
-	       <td><input type="email" name="email"></td>
+	       <td><input type="email" name="email" value="${user.email}"></td>
+	     </tr>
+	     <tr>
+	       <td>포인트</td>
+	       <td>${user.upoint}</td>
+	     </tr>
+	     <tr>
+	       <td>가입일</td>
+	       <td>${user.regdate}</td>
 	     </tr>
 	     <tr>
 	       <td colspan="2">
-	         <input type="submit" value="추가">
+	         <input type="submit" value="수정">
 	         <input type="button" value="목록" onclick="location.href='/Users/List'">
 	       </td>
 	     </tr>
 	   </table>
+	  
 	  </form>
-	 
+	  
 	</main>
 	
-<!-- javascript -->
 	<script>
 	
-		const formEl     = document.querySelector('form');
-		const useridEl   = document.querySelector('[name="userid"]');
-		const passwdEl   = document.querySelector('#passwd');
-		const passwd2El  = document.querySelector('#passwd2');
-		const usernameEl = document.querySelector('[name="username"]');
+		const formEl      = document.querySelector('form');
+		const useridEl    = document.querySelector('[name="userid"]');
+		const passwdoldEl = document.querySelector('#passwdold');
+		const passwdEl    = document.querySelector('#passwd');
+		const passwd2El   = document.querySelector('#passwd2');
+		const usernameEl  = document.querySelector('[name="username"]');
 		
 		formEl.addEventListener('submit', function (e) {
 			
 			// 아이디 체크 
 			if(useridEl.value.trim() == '') {
 				alert('아이디를 입력하세요')
-				useridEl.focus();
+				useridEL.focus();
 				e.preventDefault()  // 이벤트 취소
 				e.stopPropagation() // 이벤트 버블링 방지
 				return;
 			}
+			
+			// 현재비밀번호 체크
+			if(passwdoldEl.value.trim() == '') {
+				alert('현재 비밀번호를 입력하세요')
+				passwdoldEl.focus();
+				e.preventDefault()  // 이벤트 취소
+				e.stopPropagation() // 이벤트 버블링 방지
+				return;
+			}
+			
+			// 현재비밀번호값 == 조회된 비밀번호 확인 체크 
+			if(passwdoldEl.value != '${user.passwd}') {
+				alert('현재 비밀번호가 일치하지 않습니다')
+				passwdoldEl.focus();
+				e.preventDefault()  // 이벤트 취소
+				e.stopPropagation() // 이벤트 버블링 방지
+				return;
+			}
+			
 			// 비밀번호 체크 
 			if(passwdEl.value.trim() == '') {
 				alert('비밀번호를 입력하세요')
@@ -105,8 +136,9 @@
 				e.preventDefault()  // 이벤트 취소
 				e.stopPropagation() // 이벤트 버블링 방지
 				return;
-			}
-			// 비밀번호가 == 비밀번호확인 체크 
+			}			
+			
+			// 비밀번호값 == 비밀번호확인 체크 
 			if(passwd2El.value != passwdEL.value) {
 				alert('비밀번호가 일치하지 않습니다')
 				passwd2El.focus();
@@ -127,6 +159,5 @@
 	
 	
 	</script>
-	
 </body>
 </html>

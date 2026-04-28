@@ -15,4 +15,8 @@ public interface UserMapper {
 
 	void deleteUser(UserDto userdto);
 
+	UserDto getUser(UserDto userdto);
+
+	void updateUser(UserDto userdto);
+
 }

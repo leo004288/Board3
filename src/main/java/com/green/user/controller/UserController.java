@@ -49,7 +49,7 @@ public class UserController {
 		List<UserDto> userList = userMapper.getUserList();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/Users/List");
+		mv.setViewName("/users/list");
 		mv.addObject("userList", userList);
 		
 		return mv;
@@ -68,11 +68,31 @@ public class UserController {
 		return mv;
 	}
 	
-//	// /Users/Update
-//	@RequestMapping("/Update")
-//	public ModelAndView update() {
-//		return "";
-//	}
+	// /Users/Update
+	@RequestMapping("/UpdateForm")
+	public ModelAndView updateForm(UserDto userdto) {
+		
+		//db 조회
+		UserDto user = userMapper.getUser(userdto);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/users/update");
+		mv.addObject("user", user);
+		
+		return mv;
+	}
+	
+	//
+	@RequestMapping("/Update")
+	public ModelAndView update(UserDto userdto) {
+		
+		userMapper.updateUser(userdto);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/Users/List");
+		
+		return mv;
+	}
 	
 } //
 
