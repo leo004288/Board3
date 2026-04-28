@@ -32,7 +32,7 @@ public class UserController {
 	@RequestMapping("/Write")
 	public ModelAndView write(UserDto userdto) {
 		
-		// 넘어온 data db에 저장
+		//db 넘기기
 		userMapper.insertUser(userdto);
 		
 		ModelAndView mv = new ModelAndView();
@@ -45,20 +45,22 @@ public class UserController {
 	@RequestMapping("/List")
 	public ModelAndView list( ) {
 		
+		//db 넘기기
 		List<UserDto> userList = userMapper.getUserList();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("users/list");
+		mv.setViewName("redirect:/Users/List");
 		mv.addObject("userList", userList);
 		
 		return mv;
 	}
 	
-	// /Users/Delete
+	// /Users/Delete?userid=
 	@RequestMapping("/Delete")
-	public ModelAndView delet(UserDto userdto) {
+	public ModelAndView delete(UserDto userdto) {
 		
-		userMapper.DeleteUser(userdto);
+		//db 넘기기
+		userMapper.deleteUser(userdto);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/Users/List");
@@ -66,4 +68,25 @@ public class UserController {
 		return mv;
 	}
 	
-}
+//	// /Users/Update
+//	@RequestMapping("/Update")
+//	public ModelAndView update() {
+//		return "";
+//	}
+	
+} //
+
+//@RequestMapping("/List")
+//public String list(Model model) {
+//	return "/user/list";
+//}
+//@RequestMapping("/List")
+//public String list(Model model) {
+//	return "redirect:/Users/List";
+//}
+//
+//@RequestMapping("/List")
+//public ModelAndView list() {
+//	ModelAndView mv = new ModelAndView();
+//	return mv;
+//}

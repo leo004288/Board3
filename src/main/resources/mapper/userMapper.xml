@@ -31,11 +31,11 @@
        	   UPOINT,
      	   TO_CHAR(REGDATE, 'YYYY-MM-DD') REGDATE
 	FROM   TUSER
-	ORDER BY UPOINT DESC
+	ORDER BY UPOINT, USERID DESC
 	</select>
 
 <!-- 	사용자 삭제 -->
-	<delete id="DeleteUser">
+	<delete id="deleteUser">
 	DELETE 
 	FROM   TUSER
 	WHERE  USERID = #{userid}
