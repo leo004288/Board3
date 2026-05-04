@@ -19,4 +19,8 @@ public interface UserMapper {
 
 	void updateUser(UserDto userdto);
 
+	UserDto getIdDupCheck2(UserDto userdto);
+
+
+
 }

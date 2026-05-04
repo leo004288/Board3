@@ -38,6 +38,10 @@
 	input[type=button],input[type=submit] {
 		width:100px;
 		}
+		
+	input[name=userid] {
+		width: 60%
+		}
 	
 </style>
 
@@ -50,7 +54,11 @@
 	   <table>
 	     <tr>
 	       <td><span class=red>*</span>사용자 아이디</td>
-	       <td><input type="text" name="userid"></td>
+	       <td>
+	       	<input type="text" name="userid">
+	       	<input type="button" id="dupCheck1" value="중복확인(새창)">
+	       	<input type="button" id="dupCheck2" value="중복확인(Ajax)">
+	       </td>
 	     </tr>
 	     <tr>
 	       <td><span class=red>*</span>비밀번호</td>
@@ -81,6 +89,7 @@
 	
 <!-- javascript -->
 	<script>
+	    var   idDupChecked = false 	
 	
 		const formEl     = document.querySelector('form');
 		const useridEl   = document.querySelector('[name="userid"]');
@@ -88,12 +97,20 @@
 		const passwd2El  = document.querySelector('#passwd2');
 		const usernameEl = document.querySelector('[name="username"]');
 		
+		// 입력확인 체크
 		formEl.addEventListener('submit', function (e) {
 			
 			// 아이디 체크 
 			if(useridEl.value.trim() == '') {
 				alert('아이디를 입력하세요')
 				useridEl.focus();
+				e.preventDefault()  // 이벤트 취소
+				e.stopPropagation() // 이벤트 버블링 방지
+				return;
+			}
+			// 아이디 중복확인 체크 확인 여부
+			if(!idDupChecked){
+				alert("아이디 중복확인을 하세요")
 				e.preventDefault()  // 이벤트 취소
 				e.stopPropagation() // 이벤트 버블링 방지
 				return;
@@ -107,7 +124,7 @@
 				return;
 			}
 			// 비밀번호가 == 비밀번호확인 체크 
-			if(passwd2El.value != passwdEL.value) {
+			if(passwd2El.value != passwdEl.value) {
 				alert('비밀번호가 일치하지 않습니다')
 				passwd2El.focus();
 				e.preventDefault()  // 이벤트 취소
@@ -126,6 +143,50 @@
 		})
 	
 	
+	</script>
+	<script>
+		// 아이디 중복확인(새창열기)
+		const btnDup1El = document.querySelector("#dupCheck1")
+		
+		btnDup1El.addEventListener('click', function() {
+			alert('ok')
+		})
+		
+	</script>
+	<script>
+		// 아이디 중복확인2(Ajax)
+		const btnDup2El = document.querySelector("#dupCheck2")
+		
+		btnDup2El.addEventListener('click', function() {
+			if(useridEl.value.trim() == '') {
+				alert('아이디를 입력하세요')
+				useridEl.focus()
+				return
+			}
+			alert('ok')
+			let url = '/Users/IdDupCheck2?userid=' + useridEl.value
+					
+			fetch(url)
+			.then(response => response.json())
+			.then(data => {
+					console.log(data.userid)
+					if(data.userid != null) {
+						alert('사용불가능')
+						idDupChecked = false
+					} else {
+						alert('사용가능')
+						idDupChecked = true
+						}
+				});
+			
+		})
+		
+		// userid 의 value가 바뀌면 idDupChecked = false
+		useridEl.addEventListener('change', function() {
+			idDupChecked = false
+		})
+		
+		
 	</script>
 	
 </body>
