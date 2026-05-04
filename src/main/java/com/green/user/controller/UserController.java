@@ -111,6 +111,16 @@ public class UserController {
 		return user; 
 	}
 	
+	// 아이디 중복체크 새창만들기
+	// /Users/DupCheckWindow
+	@GetMapping("/DupCheckWindow")
+	public ModelAndView dupCheckWindow() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("users/idcheck");
+		mv.addObject("userid", "aaa");
+		return mv;
+	}
+	
 } //
 
 //@RequestMapping("/List")

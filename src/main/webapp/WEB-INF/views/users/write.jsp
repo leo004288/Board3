@@ -150,6 +150,11 @@
 		
 		btnDup1El.addEventListener('click', function() {
 			alert('ok')
+			// 새창을 띄운다
+			let url     = '/Users/DupCheckWindow';
+			let taget   = 'dupcheck'; // 새창 이름있으면 한개만 열림
+			let feature = 'left=800,top=200,width=400,height=300'; 
+			window.open(url, taget, feature)
 		})
 		
 	</script>
