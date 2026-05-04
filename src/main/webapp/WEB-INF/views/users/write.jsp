@@ -89,7 +89,6 @@
 	
 <!-- javascript -->
 	<script>
-	    var   idDupChecked = false 	
 	
 		const formEl     = document.querySelector('form');
 		const useridEl   = document.querySelector('[name="userid"]');
@@ -145,7 +144,7 @@
 	
 	</script>
 	<script>
-		// 아이디 중복확인(새창열기)
+		// 1. 아이디 중복확인(새창열기)
 		const btnDup1El = document.querySelector("#dupCheck1")
 		
 		btnDup1El.addEventListener('click', function() {
@@ -159,7 +158,8 @@
 		
 	</script>
 	<script>
-		// 아이디 중복확인2(Ajax)
+		// 2. 아이디 중복확인2(Ajax)
+	 	var   idDupChecked = false 
 		const btnDup2El = document.querySelector("#dupCheck2")
 		
 		btnDup2El.addEventListener('click', function() {
@@ -168,13 +168,12 @@
 				useridEl.focus()
 				return
 			}
-			alert('ok')
+			
 			let url = '/Users/IdDupCheck2?userid=' + useridEl.value
 					
 			fetch(url)
 			.then(response => response.json())
 			.then(data => {
-					console.log(data.userid)
 					if(data.userid != null) {
 						alert('사용불가능')
 						idDupChecked = false
@@ -186,7 +185,7 @@
 			
 		})
 		
-		// userid 의 value가 바뀌면 idDupChecked = false
+// 		// userid 의 value가 바뀌면 idDupChecked = false
 		useridEl.addEventListener('change', function() {
 			idDupChecked = false
 		})
