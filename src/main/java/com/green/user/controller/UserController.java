@@ -117,7 +117,24 @@ public class UserController {
 	public ModelAndView dupCheckWindow() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("users/idcheck");
-		mv.addObject("userid", "aaa");
+		return mv;
+	}
+	
+	// 새창 중복확인
+	// /Users/DupCheck?userid=
+	@RequestMapping("/DupCheck")
+	public ModelAndView dupCheck(UserDto userdto) {
+//		String userid = userdto.getUserid(); // ${param.userid}
+		UserDto user  = userMapper.getUser(userdto);
+		
+		String  msg  = "<b class='red'>사용 할 수 없는 아이디</b>";
+		if(user == null)
+			msg = "<b class='green'>사용사능한 아이디</b>";
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/users/idcheck");
+		mv.addObject("msg", msg);
+//		mv.addObject("userid", userid); // ${param.userid}
 		return mv;
 	}
 	
